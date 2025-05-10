@@ -1,0 +1,25 @@
+{ 
+    "id": "domek-001", 
+    "name": "Small Animal House", 
+    "description": "A cozy house suitable for guinea pigs, rabbits, ferrets,  hedgehogs, and chinchillas.", 
+    "price": 119.00, 
+    "availableSizes": ["S","M","L"], 
+    "colors": [ 
+    { 
+    "id": "gray", 
+    "name": "Gray", 
+    "image": "https://placehold.co/100x100/cccccc/ffffff?text=Gray"  }, 
+    { 
+    "id": "green", 
+    "name": "Green", 
+    "image": "https://placehold.co/100x100/00ff00/ffffff?text=Green"  
+    }, 
+    { 
+    "id": "black", 
+    "name": "Black", 
+    "image": "https://placehold.co/100x100/000000/ffffff?text=Black"  } 
+    ], 
+    "images": [ 
+    "https://placehold.co/600x400/cccccc/ffffff?text=Image+1",  "https://placehold.co/600x400/999999/ffffff?text=Image+2",  "https://placehold.co/600x400/666666/ffffff?text=Image+3"  ] 
+} 
+   
