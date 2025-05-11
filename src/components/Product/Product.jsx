@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
 import productData from '../../assets/product.json';
+import {
+  Plus,
+  Minus,
+  ChevronRight,
+  ChevronLeft,
+  ShoppingCart,
+} from 'lucide-react';
+import css from './Product.module.css';
 
 function Product({ addToCart }) {
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     setProduct(productData);
@@ -31,6 +40,18 @@ function Product({ addToCart }) {
     }
   };
 
+  const handlePrev = () => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? product.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentImageIndex((prev) =>
+      prev === product.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
   const handleAddToCart = () => {
     const { id, name, price } = product;
     if (selectedColor) {
@@ -39,15 +60,35 @@ function Product({ addToCart }) {
   };
 
   return (
-    <div>
+    <div className="container">
       {product ? (
-        <div>
-          <div>
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-            <p>${product.price}</p>
-            {selectedColor && <p>Color: {selectedColor.name}</p>}
+        <div className={css.productContainer}>
+          <div className={css.imgContainer}>
+            <button className={css.arrowLeft} onClick={handlePrev}>
+              <ChevronLeft />
+            </button>
+            <img
+              src={product.images[currentImageIndex]}
+              alt={`Product ${currentImageIndex + 1} image`}
+            />
+            <button className={css.arrowRight} onClick={handleNext}>
+              <ChevronRight />
+            </button>
           </div>
+
+          <div className={css.mainInfo}>
+            <h1>{product.name}</h1>
+            <p className={css.price}>${product.price}</p>
+            <p>{product.description}</p>
+          </div>
+          <div className={css.description}>
+            {selectedColor && (
+              <p>
+                <b>Color:</b> {selectedColor.name}
+              </p>
+            )}
+          </div>
+
           <div>
             <p>Choose color</p>
             <div style={{ display: 'flex', overflowX: 'auto' }}>
@@ -69,17 +110,26 @@ function Product({ addToCart }) {
               ))}
             </div>
           </div>
-          <button onClick={handleDecrease}>−</button>
-          <input
-            min="1"
-            value={quantity}
-            onChange={handleChange}
-            style={{ width: '50px', textAlign: 'center' }}
-          />
-          <button onClick={handleIncrease}>+</button>
-          <button onClick={handleAddToCart} disabled={!selectedColor}>
-            Add to Cart
-          </button>
+          <div>
+            <div>
+              <button onClick={handleDecrease}>
+                <Minus />
+              </button>
+              <input
+                min="1"
+                value={quantity}
+                onChange={handleChange}
+                style={{ width: '50px', textAlign: 'center' }}
+              />
+              <button onClick={handleIncrease} aria-label="Increase quantity">
+                <Plus />
+              </button>
+            </div>
+
+            <button onClick={handleAddToCart} disabled={!selectedColor}>
+              <ShoppingCart />
+            </button>
+          </div>
         </div>
       ) : (
         <p>Oops... Try again</p>

@@ -1,0 +1,41 @@
+.productContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.imgContainer {
+  position: relative;
+  width: max-content;
+}
+
+.arrowLeft {
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+.arrowRight {
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.mainInfo {
+  position: relative;
+  width: 600px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 800;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.description {
+  width: 600px;
+}

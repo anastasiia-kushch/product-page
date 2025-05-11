@@ -32,9 +32,6 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    console.log(cart);
-  });
   return (
     <Layout>
       <Routes>
