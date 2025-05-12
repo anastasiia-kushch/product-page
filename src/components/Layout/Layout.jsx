@@ -1,6 +1,6 @@
 import AppBar from '../AppBar/AppBar';
 
-function Layout({ children }) {
+export default function Layout({ children }) {
   return (
     <div>
       <AppBar />
@@ -8,5 +8,3 @@ function Layout({ children }) {
     </div>
   );
 }
-
-export default Layout;

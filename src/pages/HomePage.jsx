@@ -1,3 +1,3 @@
-export default function HomePage({ cart }) {
-  return <div>{cart}</div>;
+export default function HomePage() {
+  return <div></div>;
 }

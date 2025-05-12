@@ -7,9 +7,10 @@ import {
   ChevronLeft,
   ShoppingCart,
 } from 'lucide-react';
+import clsx from 'clsx';
 import css from './Product.module.css';
 
-function Product({ addToCart }) {
+export default function Product({ addToCart }) {
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -58,20 +59,34 @@ function Product({ addToCart }) {
       addToCart({ id, name, price, color: selectedColor, quantity });
     }
   };
-
+  // КОМПОНЕНТ
   return (
     <div className="container">
       {product ? (
         <div className={css.productContainer}>
           <div className={css.imgContainer}>
-            <button className={css.arrowLeft} onClick={handlePrev}>
+            <button
+              className={clsx(css.basicButton, css.arrow, css.arrowLeft)}
+              onClick={(e) => {
+                handlePrev();
+                e.currentTarget.blur();
+              }}
+            >
               <ChevronLeft />
             </button>
             <img
+              key={product.images[currentImageIndex]}
               src={product.images[currentImageIndex]}
               alt={`Product ${currentImageIndex + 1} image`}
+              className={css.image}
             />
-            <button className={css.arrowRight} onClick={handleNext}>
+            <button
+              className={clsx(css.basicButton, css.arrow, css.arrowRight)}
+              onClick={(e) => {
+                handleNext();
+                e.currentTarget.blur();
+              }}
+            >
               <ChevronRight />
             </button>
           </div>
@@ -81,52 +96,77 @@ function Product({ addToCart }) {
             <p className={css.price}>${product.price}</p>
             <p>{product.description}</p>
           </div>
-          <div className={css.description}>
-            {selectedColor && (
-              <p>
-                <b>Color:</b> {selectedColor.name}
-              </p>
-            )}
-          </div>
 
-          <div>
-            <p>Choose color</p>
-            <div style={{ display: 'flex', overflowX: 'auto' }}>
-              {product.colors.map((color) => (
-                <div
-                  key={color.id}
-                  onClick={() => handleColorSelect(color)}
-                  style={{
-                    cursor: 'pointer',
-                    marginRight: '10px',
-                    border:
-                      selectedColor?.id === color.id
-                        ? '2px solid blue'
-                        : 'none',
-                  }}
-                >
-                  <img src={color.image} alt={color.name} width="100" />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div>
+          {selectedColor && (
+            <p className={css.description}>
+              <b>Color:</b> {selectedColor.name}
+            </p>
+          )}
+
+          <div className={css.productOptions}>
             <div>
-              <button onClick={handleDecrease}>
-                <Minus />
-              </button>
-              <input
-                min="1"
-                value={quantity}
-                onChange={handleChange}
-                style={{ width: '50px', textAlign: 'center' }}
-              />
-              <button onClick={handleIncrease} aria-label="Increase quantity">
-                <Plus />
-              </button>
+              <p>Choose color:</p>
+              <ul className={css.optionList}>
+                {product.colors.map((color) => (
+                  <li
+                    key={color.id}
+                    onClick={() => handleColorSelect(color)}
+                    className={`${css.colorOption} ${
+                      selectedColor?.id === color.id
+                        ? css.colorOptionActive
+                        : ''
+                    }`}
+                  >
+                    <img
+                      className={css.colorImage}
+                      src={color.image}
+                      alt={color.name}
+                      width="45"
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <button onClick={handleAddToCart} disabled={!selectedColor}>
+            <div>
+              <label htmlFor="quantity">Choose quantity:</label>
+              <div className={css.optionList}>
+                <button
+                  className={css.basicButton}
+                  onClick={(e) => {
+                    handleDecrease();
+                    e.currentTarget.blur();
+                  }}
+                  aria-label="Decrease quantity"
+                >
+                  <Minus />
+                </button>
+                <input
+                  id="quantity"
+                  min="1"
+                  value={quantity}
+                  onChange={handleChange}
+                  className={css.quantityInput}
+                />
+                <button
+                  className={css.basicButton}
+                  onClick={(e) => {
+                    handleIncrease();
+                    e.currentTarget.blur();
+                  }}
+                  aria-label="Increase quantity"
+                >
+                  <Plus />
+                </button>
+              </div>
+            </div>
+            <button
+              className={clsx(css.basicButton, css.cartButton)}
+              onClick={(e) => {
+                handleAddToCart();
+                e.currentTarget.blur();
+              }}
+              disabled={!selectedColor}
+            >
               <ShoppingCart />
             </button>
           </div>
@@ -137,5 +177,3 @@ function Product({ addToCart }) {
     </div>
   );
 }
-
-export default Product;
