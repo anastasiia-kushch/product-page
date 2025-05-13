@@ -61,7 +61,7 @@ export default function Cart({ cart, deleteItem }) {
           </div>
 
           <p className={css.total}>
-            <strong>Total:</strong> ${totalPrice}
+            <strong>Total amount:</strong> ${totalPrice}
           </p>
         </div>
       </div>
