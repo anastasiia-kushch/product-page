@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ShoppingCart,
 } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
 import clsx from 'clsx';
 import css from './Product.module.css';
 
@@ -54,12 +55,15 @@ export default function Product({ addToCart }) {
   };
 
   const handleAddToCart = () => {
-    const { id, name, price } = product;
+    const { id, name, price, images } = product;
     if (selectedColor) {
-      addToCart({ id, name, price, color: selectedColor, quantity });
+      addToCart({ id, name, price, images, color: selectedColor, quantity });
+      toast.success('Added to cart!');
+    } else {
+      toast.error('Choose the color!');
     }
   };
-  // КОМПОНЕНТ
+
   return (
     <div className="container">
       {product ? (
@@ -141,6 +145,7 @@ export default function Product({ addToCart }) {
                   <Minus />
                 </button>
                 <input
+                  type="text"
                   id="quantity"
                   min="1"
                   value={quantity}
@@ -165,7 +170,6 @@ export default function Product({ addToCart }) {
                 handleAddToCart();
                 e.currentTarget.blur();
               }}
-              disabled={!selectedColor}
             >
               <ShoppingCart />
             </button>

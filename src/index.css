@@ -2,8 +2,13 @@
 :root {
   --primary-font: 'Montserrat', sans-serif;
   --text-color: #000000;
+  --white-color: #ffffff;
+  --link-focus-color: rgb(35, 117, 164);
+  --button-focus-color: #ececec;
+  --border: 1px solid var(--text-color);
+  --active-page-bg: #a9c3c2c2;
 }
-
+/*  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.5); */
 /* #region RESET */
 *,
 *::before,
@@ -56,6 +61,7 @@ body {
   line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--text-color);
+  background-color: #d6faf8c2;
 }
 
 .container {

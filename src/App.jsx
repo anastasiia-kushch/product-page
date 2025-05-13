@@ -5,6 +5,7 @@ import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
   const [cart, setCart] = useState(() => {
@@ -32,19 +33,28 @@ function App() {
     });
   };
 
+  const deleteItem = (index) => {
+    const updatedCart = cart.filter((_, i) => i !== index);
+    setCart(updatedCart);
+    toast.success('Product deleted');
+  };
+
   return (
     <Layout>
+      <Toaster />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
           path="/product"
           element={<ProductPage addToCart={addToCart} />}
         />
-        <Route path="/cart" element={<CartPage cart={cart} />} />
+        <Route
+          path="/cart"
+          element={<CartPage cart={cart} deleteItem={deleteItem} />}
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
   );
 }
-// СДЕЛАТЬ LOUDER
 export default App;
